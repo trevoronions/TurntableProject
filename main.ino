@@ -40,15 +40,15 @@ void loop() {
         break;
       }
       
-      else if (180.0 < angle + currentPosition) {
-        Serial.println("Total angle exceeds 180");
+      else if (90.0 < angle + currentPosition) {
+        Serial.println("Total angle exceeds 90");
         continue;
       }
       
       else if (tenxAngle % 9 == 0){
         int steps = tenxAngle / 9; 
 
-        motorMovementWithSteps(steps, 0);
+        motorMovementWithSteps(steps, 1);
         currentPosition = angle + currentPosition; 
         break;
       }
@@ -78,8 +78,8 @@ void loop() {
       if (angle == 999.0){
         break;
       }
-      else if (angle > 180.0){
-        Serial.println("Angle is invalid (greater than 180 Degrees)");
+      else if (angle > 90.0){
+        Serial.println("Angle is invalid (greater than 90 Degrees)");
         continue; 
       }
       else if (tenxAngle % 9 == 0){ // Checking if valid angle
@@ -90,11 +90,11 @@ void loop() {
         }
         else if (angle - currentPosition > 0){
           steps = (angle - currentPosition) / 0.9;
-          motorMovementWithSteps(steps, 0);
+          motorMovementWithSteps(steps, 1);
         }
         else {
           steps = (currentPosition - angle) / 0.9;
-          motorMovementWithSteps(steps, 1);
+          motorMovementWithSteps(steps, 0);
         }
         currentPosition = angle; 
         break;
@@ -109,7 +109,7 @@ void loop() {
   
   else if (input == "RESET"){
     int stepsToZero = currentPosition / 0.9; //calulate the amount of steps to zero 
-    motorMovementWithSteps(stepsToZero, 1);
+    motorMovementWithSteps(stepsToZero, 0);
     currentPosition = 0.0;
   }
 
